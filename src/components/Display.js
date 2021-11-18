@@ -1,38 +1,34 @@
 import React from 'react';
 import "./Display.css";
-import a from '../images/1.png';
-import b from '../images/2.png';
-import c from '../images/3.png';
-import d from '../images/4.png';
-import e from '../images/5.png';
-import f from '../images/6.png';
-import g from '../images/7.png';
-import h from '../images/8.png';
+import turtles from '../gvimages/crew-avid-turtles.gif'
+import eagle from '../gvimages/crew-breezy-eagle.gif'
+import tiger from '../gvimages/crew-spicy-tiger.gif'
 
 export default function Display () {
     return (
         <div className="display__wrapper" id="roadmap">
             <div className="display">
-                <h1>Vision for the Community and Future</h1>
-                <p>We lowered gas for everyone so we can all beep boop into the metaverse! #BeepboopBitbot</p>
                 <div className="display__container">
                     <div className="display__individual">
-                        <img src={a} alt="bitbot example"/>
+                        <img src={tiger} alt="GVP Tiger"/>
+                        <div className="display__individualText">
+                            <h2>TYGRISONIANS</h2>
+                            <p>The Tygrisonians are playful and flirtatious, with all. Because of this, they are seen as superficial and sly. Tygris value looks, reputation, status, humor, family, and loyalty. Their home planet (Tygris) was a tropical planet filled with resources and dangers.</p>
+                        </div>
                     </div>
                     <div className="display__individual">
-                        <img src={b} alt="bitbot example" />
+                        <img src={eagle} alt="GVP Eagle" />
+                        <div className="display__individualText">
+                            <h2>AQUILANS</h2>
+                            <p>Aquilans are blunt individualists with a strong sense of justice and fairness. Aquilan culture centres itself around the theatre, a place of public speeches and performances. They value an egalitarian society and prize civic duty born out of personal freedom.</p>
+                        </div>
                     </div>
                     <div className="display__individual">
-                        <img src={c} alt="bitbot example" />
-                    </div>
-                    <div className="display__individual">
-                        <img src={d} alt="bitbot example" />
-                    </div>
-                    <div className="display__individual">
-                        <img src={e} alt="bitbot example" />
-                    </div>
-                    <div className="display__individual">
-                        <img src={f} alt="bitbot example" />
+                        <img src={turtles} alt="GVP Turtle" />
+                        <div className="display__individualText">
+                            <h2>TURTURIANS</h2>
+                            <p>Turturians come from a watery planet with a mild climate overall and subtropical areas near the equator. They prize community, their spiritual traditions, and philosophy. Turturians enjoy celebrations - their festivals include dance, music, and storytelling.</p>
+                        </div>
                     </div>
                 </div>
             </div>  

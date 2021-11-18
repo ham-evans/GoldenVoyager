@@ -22,9 +22,9 @@ class App extends Component {
           <Switch />
           <Navbar />
           <Home />
+          <Display />
           <Welcome />
           <About />
-          <Display />
           <Team />
           <Info />
           <Footer />
