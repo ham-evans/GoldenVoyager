@@ -21,7 +21,7 @@ class App extends Component {
         <Router>
           <Switch />
           <Navbar />
-          <Banner />
+          <Home />
           <Welcome />
           <About />
           <Display />

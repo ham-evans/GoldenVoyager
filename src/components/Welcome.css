@@ -1,46 +1,19 @@
 .welcome { 
     margin: 0;
     height: 60vh;
-    background-color: #a4c7ce;
+    background-color: #000;
+}
+
+.welcome__wrapper { 
+    height: 60vh;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: row;
 }
 
-.welcome__button { 
-    padding: 10px 30px;
-    height: 100%;
-    border: none;
-    outline: none;
-    border-radius: 15px;
-    background: #000;
-    font-style: 1.5rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    transition: all 0.35s;
-    font-family: 'Share Tech Mono', monospace;
-}
-
-.welcome__link { 
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.35s;
-}
-
-.welcome__link:hover { 
-    transform: scale(1.1);
-    cursor: pointer; 
-}
-
-.welcome__button:hover { 
-    transform: scale(1.1);
-    cursor: pointer;  
-}
-
 .welcome__container { 
-    color: #000;
+    color: #fff;
     text-align: center;
     width: 50vw;
     overflow-x: visible;
@@ -62,6 +35,39 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.welcome__link { 
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.35s;
+}
+
+.welcome__link:hover { 
+    transform: scale(1.1);
+    cursor: pointer; 
+}
+
+.welcome__button { 
+    padding: 10px 30px;
+    height: 100%;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background: #000;
+    font-style: 1.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: all 0.35s;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.welcome__button:hover { 
+    transform: scale(1.1);
+    cursor: pointer;  
+}
+
+
 
 .welcome__imgContainer {
     width: 40vw;
