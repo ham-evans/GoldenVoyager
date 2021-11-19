@@ -1,7 +1,11 @@
 .team { 
     margin: 0;
-    height: 65vh;
-    background-color: #8dd691;
+    height: 100%;
+    background-image: url("../gvimages/spaceBG4.jpeg");
+    border-top: 2px solid #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -13,13 +17,64 @@
     color: #000;
     text-align: center;
     overflow-x: visible;
+    color: #fff;
+    background-image: linear-gradient(rgba(0,0,0,.6) 0%, rgba(0,0,0,.6) 85%, rgba(0,0,0,1) 100%);
+    width: 100vw;
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
 
 .team__container h1 { 
     margin: 0;
+    padding-top: 40px;
     padding-bottom: 40px;
-    font-size: 3.2rem;
+    font-size: 3.4rem;
 }
+
+.team__core { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.team__coreWrapper { 
+    display: flex;
+    flex-direction: row;
+}
+
+.team__individual { 
+    width: 12vw;
+    height: 100%;
+    margin: auto 20px;
+    margin-top: 0;
+}
+
+.team__individual a { 
+    text-decoration: none;
+    color: #fff;
+}
+
+.team__imgWrapper { 
+    width: 12vw;
+    height: 12vw;
+    overflow: visible;
+}
+
+.team__imgWrapper img { 
+    width: 12vw;
+    height: 12vw;
+    object-fit: contain;
+    border-radius: 15px;
+    overflow: visible;
+}
+
+.team__textWrapper h2{ 
+    margin-bottom: 0;
+}
+
+
 
 @media screen and (max-width: 960px) {
     .team { 

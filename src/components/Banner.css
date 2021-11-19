@@ -1,8 +1,8 @@
 .banner { 
-    height: 70vh;
+    height: 90vh;
     width: auto;
-    background-image: url("../gvimages/welcomeBG.jpeg");
-    background-position: center;
+    background-image: url("../gvimages/heroBG.png");
+    background-position: cover;
     background-repeat: no-repeat;
     background-size: cover;
 }
