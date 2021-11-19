@@ -222,18 +222,22 @@
         right: 5vw;
         top: 14vh;
         width: 90vw;
-        height: 70vh;
+        height: 75vh;
+        overflow: visible;
     }
+    
 
     .minthome__signIn button {
         width: 80%;
     }
 
     .minthome__mint button { 
-        width: 80%;
+        width: 90%;
+        font-size: 1rem;
     }
 
     .minthome__mint-false button {
-        width: 80%;
+        width: 90%;
+        font-size: 1rem;
     }
 }

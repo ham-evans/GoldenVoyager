@@ -45,9 +45,9 @@
     border-radius: 50%;
     margin: auto;
     box-shadow:
-    0 0 15px 10px rgba(255, 255, 255, 0.582),  /* inner white */
-    0 0 20px 15px rgba(255, 0, 255, 0.425), /* middle magenta */
-    0 0 30px 20px rgba(0, 255, 255, 0.486); /* outer cyan */
+    0 0 15px 10px rgba(206, 206, 206, 0.582),  /* inner white */
+    0 0 20px 15px rgba(170, 0, 170, 0.425), /* middle magenta */
+    0 0 30px 20px rgba(0, 177, 177, 0.486); /* outer cyan */
 }
 
 .display__individualText {
@@ -90,7 +90,6 @@
 
     .display__individual img {
         max-width: 80vw;
-        border-radius: 20px;
         height: 25vh;
         width: 25vh;
     }

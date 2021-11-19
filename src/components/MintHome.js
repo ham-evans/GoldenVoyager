@@ -11,24 +11,24 @@ import "./MintHome.css";
 import { ethers } from 'ethers';
 import EthereumSession from '../lib/eth-session.js';
 
-/*
 const mainnetConfig = {
-    'CONTRACT': '0x68cf439BA5D2897524091Ef81Cb0A3D1F56E5500',
+    'CONTRACT': '0x05cef8e8eeFca214F7eD28564C980E6d45A2Bf1d',
     'CHAIN_ID':  1,
     'RPC_URL':   process.env.INFURA_API_MAINNET_KEY,
     'ABI':       ContractAbi
 }
-*/
 
+/*
 const rinkebyConfig = {
     'CONTRACT': '0xb370804cBA5AD127D426aca7C2a24B6f9D7E5C4b',
     'CHAIN_ID':  4,
     'RPC_URL':   process.env.INFURA_API_RINKEBY_KEY,
     'ABI':       ContractAbi
 }
+*/
 
 
-const config = rinkebyConfig;
+const config = mainnetConfig;
 
 const CONNECTORS = {};
 CONNECTORS.Walletlink = new WalletLinkConnector({
@@ -274,7 +274,7 @@ export default function MintHome () {
                     <div className="minthome__container">
                         <div className="minthome__info">
                             <h1>MINT YOUR VOYAGER NOW!</h1>
-                            <p>Mint Price: 0.04 ETH / Limit per Transaction: 15</p>
+                            <p>Mint Price: 0.04 ETH</p>
                             <div className="minthome__signIn"> 
                                 {!signedIn ? <button onClick={signIn}>CONNECT WALLET</button>
                                     : <button onClick={signOut}>WALLET CONNECTED<br /> CLICK TO SIGN OUT</button>
