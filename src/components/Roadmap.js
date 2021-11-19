@@ -12,7 +12,7 @@ export default function Roadmap () {
     const onClick4 = () => setShowResults4(!showResults4)
 
     return (
-        <div className="roadmap" id="roadmap">
+        <div className="roadmap" id="direction">
             <div className="roadmap__wrapper">
                 <div className="roadmap__container"  >
                     <h1>GOLDEN VOYAGER FUTURE DIRECTIONS</h1> 

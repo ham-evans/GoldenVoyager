@@ -5,6 +5,10 @@
     align-items: center;
     height: 80vh;
     overflow: visible;
+    background-image: url("../gvimages/Aquilan.png");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .display__container { 
@@ -22,6 +26,7 @@
     width: 100vw;
     height: 100%;
     overflow: visible;
+    background: rgba(0,0,0,.4);
 }
 
 .display__individual { 

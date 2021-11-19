@@ -1,7 +1,7 @@
 .team { 
     margin: 0;
     height: 100%;
-    background-image: url("../gvimages/spaceBG4.jpeg");
+    background-image: url("../gvimages/spaceBG1.jpeg");
     border-top: 2px solid #fff;
     background-position: center;
     background-repeat: no-repeat;
@@ -18,7 +18,7 @@
     text-align: center;
     overflow-x: visible;
     color: #fff;
-    background-image: linear-gradient(rgba(0,0,0,.6) 0%, rgba(0,0,0,.6) 85%, rgba(0,0,0,1) 100%);
+    background-image: linear-gradient(rgba(0,0,0,.7) 0%, rgba(0,0,0,.7) 85%, rgba(0,0,0,1) 100%);
     width: 100vw;
     padding-top: 120px;
     padding-bottom: 120px;

@@ -26,7 +26,6 @@ class App extends Component {
           <Welcome />
           <Roadmap />
           <Team />
-          <Banner />
           <Footer />
         </Router> 
       </>

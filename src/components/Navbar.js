@@ -29,7 +29,7 @@ export default class Navbar extends Component {
             <li className="nav-item">
               <HashLink
                 smooth
-                to="#project"
+                to="#about"
                 className="nav-links"
               >
                 ABOUT
@@ -38,10 +38,10 @@ export default class Navbar extends Component {
             <li className="nav-item">
               <HashLink
                 smooth
-                to="#roadmap"
+                to="#direction"
                 className="nav-links"
               >
-                VISION
+                DIRECTION
               </HashLink>
             </li>
             <li className="nav-item">
@@ -50,16 +50,16 @@ export default class Navbar extends Component {
                 to="#team"
                 className="nav-links"
               >
-                FOUNDERS
+                TEAM
               </HashLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://twitter.com/BitBotSociety" }} target="_blank" >
+              <Link className="nav-links" to={{ pathname: "https://twitter.com/GVoyagerParty" }} target="_blank" >
                 <FontAwesomeIcon icon={faTwitter} />
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://discord.com/invite/kG24rk4cMD" }} target="_blank" >
+              <Link className="nav-links" to={{ pathname: "https://discord.com/invite/goldenvoyagerparty" }} target="_blank" >
                 <FontAwesomeIcon icon={faDiscord} />
               </Link>
             </li>
