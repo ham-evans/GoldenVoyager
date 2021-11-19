@@ -95,7 +95,7 @@
   }
 
   .footer__space { 
-    display: none;
+    width: 25vw;
   }
 
   .footer-container { 
@@ -107,7 +107,7 @@
 
   .footer-logo { 
     height: 50px;
-    width: 50vw;
+    width: 50px;
     object-fit: contain;
     align-items: center;
     cursor: pointer;
@@ -117,7 +117,7 @@
   
   .footer-logo img { 
     max-width: none;
-    width: 50vw;
+    width: 50px;
   }
 
   .footer-links {

@@ -2,7 +2,6 @@
     margin: 0;
     height: 100%;
     background-image: url("../gvimages/spaceBG1.jpeg");
-    border-top: 2px solid #fff;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -80,6 +79,7 @@
     .team { 
         flex-direction: column;
         height: 100%;
+        border: none;
     }
 
     .team__container { 
@@ -89,8 +89,39 @@
     }
 
     .team__container h1 { 
-        margin-top: 50px;
+        margin-top: 20px;
         padding-bottom: 20px;
+    }
+
+    .team__coreWrapper { 
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto; 
+        column-gap: 10px;
+        row-gap: 15px;
+    }
+
+    .team__individual { 
+        width: 25vw;
+        margin: auto 5px;
+    }
+    
+    .team__imgWrapper { 
+        width: 25vw;
+        height: 25vw;
+    }
+    
+    .team__imgWrapper img { 
+        width: 25vw;
+        height: 25vw;
+    }
+
+    .text__wrapper h2{ 
+        font-size: 1rem;
+    }
+
+    .text__wrapper p{ 
+        font-size: 1rem;
     }
 
 }
