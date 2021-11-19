@@ -10,7 +10,6 @@
     display: flex;
     flex-direction: column;
     overflow-x: visible;
-    border-top: 1px solid #fff;
 }
 
 .team__container { 
