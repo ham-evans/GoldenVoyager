@@ -5,6 +5,7 @@ import Home from './components/Home'
 import MintHome from './components/MintHome';
 import Banner from './components/Banner'
 import Welcome from './components/Welcome'
+import Roadmap from './components/Roadmap'
 import About from './components/About'
 import Display from './components/Display'
 import Team from './components/Team'
@@ -24,6 +25,7 @@ class App extends Component {
           <Home />
           <Display />
           <Welcome />
+          <Roadmap />
           <About />
           <Team />
           <Info />
