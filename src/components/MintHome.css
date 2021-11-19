@@ -13,26 +13,56 @@
     width: 200px;
 }
 
+.minthome {
+    display: flex;
+    flex-direction: row;
+}
+
+.minthome__gif { 
+    width: 35vw;
+    height: 100vh;
+    background-image: url("../gvimages/mintPage.gif");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 .minthomeBg { 
-    height: 94vh;
-    width: auto;
+    height: 100vh;
+    width: 65vw;
     margin: 0;
+    background-color: black;
+    position: relative;
+    z-index: 1;
+    background-image: url("../gvimages/spaceBG1.jpeg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    object-fit: contain;
+}
+
+.minthome__wrapper { 
+    height: 100vh;
+    margin: auto;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     position: relative;
-    background-image: url("../images/bgBitbot2.jpeg");
-    pointer-events: none;
+    z-index: 3;
+    background-color: rgba(0,0,0,.2);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .minthome__container { 
-    background-color: rgba(52,59,65,.95);
     position: absolute;
-    right: 20vw;
-    top: 17vh;
-    width: 60vw;
-    height: 50vh;
+    right: 7vw;
+    top: 20vh;
+    width: 51vw;
+    height: 60vh;
     border-radius: 20px;
     align-items: center;
     justify-content: center;
@@ -41,7 +71,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: #fff;
-    border: 3px solid #2add7a;;
+    z-index: 5;
 }
 
 .minthome__info { 
@@ -70,16 +100,16 @@
     width: 400px;
     border: none;
     outline: none;
-    border-radius: 15px;
+    border-radius: 20px;
     font-style: 1.5rem;
     margin-top: 10px;
     margin-bottom: 30px;
     transition: all 0.35s;
-    background:#000;
+    background:rgba(64,92,151,.6);
     color: #fff;
-    border: 2px solid #2add7a;
+    border: 2px solid #fff;
     font-size: 1.2rem;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Gruppo', cursive;
 
 }
 
@@ -90,16 +120,16 @@
     width: 400px;
     border: none;
     outline: none;
-    border-radius: 15px;
-    font-style: 1.5rem;
+    border-radius: 20px;
+    font-style: 1.2rem;
     margin-top: 10px;
     margin-bottom: 30px;
     transition: all 0.35s;
-    font-size: 1.2rem;
-    background:#000;
+    background:rgba(64,92,151,.6);
     color: #fff;
-    border: 2px solid #2add7a;
-    font-family: 'Share Tech Mono', monospace;
+    border: 2px solid #fff;
+    font-size: 1.2rem;
+    font-family: 'Gruppo', cursive;
 
 }
 
@@ -110,16 +140,16 @@
 
 .minthome__signIn-input input { 
     width: 35%;
-    background:#000;
-    color: #fff;
-    border: 2px solid #2add7a;
     border-radius: 10px;
     text-align: center;
     padding-top: 9px;
     padding-bottom: 9px;
     outline-width: 0;
+    background:rgba(64,92,151,.6);
+    color: #fff;
+    border: 2px solid #fff;
     font-size: 1.2rem;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Gruppo', cursive;
 
 }
 
@@ -127,15 +157,16 @@
     cursor: default;
     width: 35%;
     background:#000;
-    color: #fff;
-    border: 2px solid #FF6347;
     border-radius: 10px;
     text-align: center;
     padding-top: 9px;
     padding-bottom: 9px;
     outline-width: 0;
+    background:rgba(64,92,151,.6);
+    color: #fff;
+    border: 2px solid #fff;
     font-size: 1.2rem;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Gruppo', cursive;
 }
 
 .minthome__mint button { 
@@ -144,16 +175,16 @@
     width: 400px;
     border: none;
     outline: none;
-    border-radius: 15px;
-    font-style: 1.5rem;
+    border-radius: 20px;
+    font-style: 1.2rem;
     margin-top: 10px;
     margin-bottom: 10px;
     transition: all 0.35s;
-    background:#000;
+    background:rgba(64,92,151,.6);
     color: #fff;
-    border: 2px solid #2add7a;
-    font-size: 1.3rem;
-    font-family: 'Share Tech Mono', monospace;
+    border: 2px solid #fff;
+    font-size: 1.2rem;
+    font-family: 'Gruppo', cursive;
 }
 
 .minthome__mint button:hover {
@@ -166,22 +197,25 @@
     height: 50px;
     width: 400px;
     outline: none;
-    border-radius: 15px;
-    font-style: 1.5rem;
+    border-radius: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
     transition: all 0.35s;
-    font-size: 1.1rem;
-    background:#000;
+    background:rgba(64,92,151,.6);
     color: #fff;
-    border: 2px solid #FF6347;
-    font-family: 'Share Tech Mono', monospace;
+    border: 2px solid #fff;
+    font-size: 1.2rem;
+    font-family: 'Gruppo', cursive;
 
 }
 
-@media screen and (max-width: 675px) {
+@media screen and (max-width: 960px) {
+    .minthome__gif { 
+        display: none;
+    }
+
     .minthomeBg { 
-        background-image: url("../images/bgBitbot2.jpeg");
+        width: 100vw;
     }
 
     .minthome__container {

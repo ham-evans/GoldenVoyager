@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import logo from '../gvimages/icon.png'
+import logo from '../gvimages/logoGif.gif'
 
 import "./Footer.css";
 

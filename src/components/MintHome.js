@@ -3,36 +3,38 @@ import { useWeb3React } from '@web3-react/core';
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector }    from "@web3-react/walletlink-connector";
 
-import ContractAbi from '../artifacts/contracts/Bitbot.json';
+import ContractAbi from '../artifacts/contracts/GoldenVoyager.json';
 import Modal from './Modal.js';
+import Navbar from './NavbarMint'
 import "./MintHome.css";
 
 import { ethers } from 'ethers';
 import EthereumSession from '../lib/eth-session.js';
 
+/*
 const mainnetConfig = {
     'CONTRACT': '0x68cf439BA5D2897524091Ef81Cb0A3D1F56E5500',
     'CHAIN_ID':  1,
     'RPC_URL':   process.env.INFURA_API_MAINNET_KEY,
     'ABI':       ContractAbi
 }
-
-/*
-const rinkebyConfig = {
-    'CONTRACT': '0x91F9EA5939Cc707357808481b1B90ddaDa81bf33',
-    'CHAIN_ID':  4,
-    'RPC_URL':   process.env.INFURA_API_RINKEBY_KEY,
-    'ABI':       ContractAbi.abi
-}
 */
 
-const config = mainnetConfig;
+const rinkebyConfig = {
+    'CONTRACT': '0xb370804cBA5AD127D426aca7C2a24B6f9D7E5C4b',
+    'CHAIN_ID':  4,
+    'RPC_URL':   process.env.INFURA_API_RINKEBY_KEY,
+    'ABI':       ContractAbi
+}
+
+
+const config = rinkebyConfig;
 
 const CONNECTORS = {};
 CONNECTORS.Walletlink = new WalletLinkConnector({
     url: config.RPC_URL,
     appLogoUrl: null,
-    appName: "Bit Bot Society",
+    appName: "Golden Voyager Party",
 });
 
 CONNECTORS.WalletConnect = new WalletConnectConnector({
@@ -50,9 +52,9 @@ export default function MintHome () {
     const [contract, setContract] = useState(null);
     const [contractWithSigner, setContractWithSigner] = useState(null);
     const [tokenPrice, setTokenPrice] = useState(0);
-    const [howManyTokens, setHowManyTokens] = useState(20)
+    const [howManyTokens, setHowManyTokens] = useState(15)
     const [totalSupply, setTotalSupply] = useState(0);
-    const [paused, setPaused] = useState(true);
+    const [isActive, setIsActive] = useState(false);
 
     const [modalShown, toggleModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -158,7 +160,7 @@ export default function MintHome () {
         }
         catch( error ){
             if (error.code === 4001) {
-                setErrorMessage("Sign in to mint Bit Bots!")
+                setErrorMessage("Sign in to mint Golden Voyagers!")
                 toggleModal(true);
             } else { 
                 setErrorMessage(error)
@@ -176,14 +178,14 @@ export default function MintHome () {
         const signer = ethereumSession.ethersProvider.getSigner();
         const contractWithSigner = contract.connect(signer)
         const totalSupply = await contract.totalSupply();
-        const tokenPrice = await contract.cost();
-        const paused = await contract.paused();
+        const tokenPrice = await contract.PRICE();
+        const isActive = await contract.isActive();
 
         setContract(contract);
         setContractWithSigner(contractWithSigner);
         setTokenPrice(tokenPrice);
         setTotalSupply(totalSupply.toNumber())
-        setPaused(paused);
+        setIsActive(isActive);
     }
 
     async function mint () { 
@@ -193,7 +195,7 @@ export default function MintHome () {
             return
         }
 
-        if( paused ){
+        if( !isActive ){
             setErrorMessage("Sale is not active right now.  Try again later!")
             toggleModal(true);
             return;
@@ -224,12 +226,11 @@ export default function MintHome () {
                 from: walletAddress,
                 value: price
             }
-
-            const gasBN = await ethereumSession.contract.estimateGas.mint(walletAddress, howManyTokens, overrides);
+            const gasBN = await ethereumSession.contract.estimateGas.mint(howManyTokens, overrides);
             const finalGasBN = gasBN.mul( ethers.BigNumber.from(11) ).div( ethers.BigNumber.from(10) );
             overrides.gasLimit = finalGasBN.toString();
 
-            const txn = await contractWithSigner.mint(walletAddress, howManyTokens, overrides)
+            const txn = await contractWithSigner.mint(howManyTokens, overrides)
             await txn.wait();
             setMintingSuccess(howManyTokens)
         } catch (error) {
@@ -240,7 +241,7 @@ export default function MintHome () {
     }
 
     const setMintingSuccess = (howManyTokens) => {
-        setErrorMessage("Congrats on minting " + howManyTokens + "  Bit Bots!!");
+        setErrorMessage("Congrats on minting " + howManyTokens + "  Golden Voyagers!!");
         toggleModal(true);
     }
 
@@ -249,14 +250,9 @@ export default function MintHome () {
         toggleModal(true);
     }
 
-    const mintOne = () => { 
-        setErrorMessage("Must mint atleast one Bit Bot!")
-        toggleModal(true);
-    }
-
     function checkHowMany (newNumber) { 
-        if (newNumber > 20) {
-            setHowManyTokens(20)
+        if (newNumber > 15) {
+            setHowManyTokens(15)
         } else if (newNumber < 1) { 
             setHowManyTokens("")
         } else { 
@@ -264,46 +260,53 @@ export default function MintHome () {
         }
     }
 
-    const oneText = howManyTokens < 2 && howManyTokens > 0 ? "MINT " + howManyTokens + " BIT BOT!" : "MINT " + howManyTokens + " BIT BOTS!"
-    const zeroText = howManyTokens < 1 ? "MUST MINT ATLEAST 1 BIT BOT" : oneText
+    const oneText = howManyTokens < 2 && howManyTokens > 0 ? "MINT " + howManyTokens + " VOYAGER!" : "MINT " + howManyTokens + " VOYAGERS!"
+    const zeroText = howManyTokens < 1 ? "MUST MINT ATLEAST 1 VOYAGER" : oneText
 
-    const paraText = signedIn ? "INPUT NUMBER OF BIT BOTS TO MINT (0.015 ETH): " : "CONNECT WALLET ABOVE TO MINT BIT BOTS!"
+    const paraText = signedIn ? "INPUT NUMBER OF VOYAGERS TO MINT: " : "CONNECT WALLET ABOVE TO MINT VOYAGERS!"
     const buttonText = signedIn ? zeroText : "CONNECT WALLET TO MINT"
 
     return (
-        <div id="#home">
-            <div className="minthomeBg" />
-            <div className="minthome__container">
-                <div className="minthome__info">
-                    <h1>MINT A BIT BOT!</h1>
-                    <div className="minthome__signIn"> 
-                        {!signedIn ? <button onClick={signIn}>CONNECT WALLET</button>
-                            : <button onClick={signOut}>WALLET CONNECTED<br /> CLICK TO SIGN OUT</button>
-                        }
-                    </div>
-                    
-                    <p>BIT BOTS MINTED: {totalSupply} / 9,999</p>
-                    <p>{paraText}</p>
-                    
-                    <div className={signedIn ? "minthome__signIn-input" : "minthome__signIn-input-false"}>
-                        <input 
-                            type="number" 
-                            min="1"
-                            max="20"
-                            value={howManyTokens}
-                            onChange={ e => checkHowMany(e.target.value) }
-                            name="" 
-                        />
-                    </div>
-                    
-                    <br/>
-                    
-                    <div className={signedIn && howManyTokens > 0 ? "minthome__mint" : "minthome__mint-false"}>
-                        {howManyTokens > 0 ? <button onClick={() => mint()}>{buttonText}</button>
-                            : <button>{buttonText}</button>
-                        }
+        <div className="minthome">
+            <div className="minthomeBg">
+                <div className="minthome__wrapper">
+                    <Navbar />
+                    <div className="minthome__container">
+                        <div className="minthome__info">
+                            <h1>MINT YOUR VOYAGER NOW!</h1>
+                            <p>Mint Price: 0.04 ETH / Limit per Transaction: 15</p>
+                            <div className="minthome__signIn"> 
+                                {!signedIn ? <button onClick={signIn}>CONNECT WALLET</button>
+                                    : <button onClick={signOut}>WALLET CONNECTED<br /> CLICK TO SIGN OUT</button>
+                                }
+                            </div>
+                            
+                            <p>VOYAGERS: {totalSupply} / 9000</p>
+                            <p>{paraText}</p>
+                            
+                            <div className={signedIn ? "minthome__signIn-input" : "minthome__signIn-input-false"}>
+                                <input 
+                                    type="number" 
+                                    min="1"
+                                    max="15"
+                                    value={howManyTokens}
+                                    onChange={ e => checkHowMany(e.target.value) }
+                                    name="" 
+                                />
+                            </div>
+                            
+                            <br/>
+                            
+                            <div className={signedIn && howManyTokens > 0 ? "minthome__mint" : "minthome__mint-false"}>
+                                {howManyTokens > 0 ? <button onClick={() => mint()}>{buttonText}</button>
+                                    : <button>{buttonText}</button>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div className="minthome__gif">
             </div>
 
             <Modal

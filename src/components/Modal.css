@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,19 +17,21 @@
     height: auto;
     padding: 40px;
     border-radius: 20px;
+    background: rgba(0,0,0,.7);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     justify-content: center;
     align-items: center;
     text-align:center;
-    border: 3px solid #e6c7fb;
+    border: 3px solid rgb(90, 121, 187);
     padding-top: 60px;
     padding-bottom: 60px;
+    color: #fff;
 }
 
 .modal-content button { 
-  background-color: #e6c7fb;
+  background-color: rgb(90, 121, 187);
   border: none;
   font-size: 1.1rem;
   border-radius: 10px;
@@ -37,9 +39,8 @@
   width: 80px;
   margin-top: 20px;
   transition: all 0.35s;
-  font-family: 'Dosis', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Gruppo', cursive;
+  color: #fff;
 }
 
 .modal-content button:hover { 
@@ -48,7 +49,7 @@
 }
 
 .modal__text { 
-  background-color: #e6c7fb;
+  background-color: rgb(90, 121, 187);
   height: 100%;
   border-radius: 10px;
   padding-top: 80px;

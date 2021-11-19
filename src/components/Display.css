@@ -42,7 +42,12 @@
     width: 20vw;
     height: 20vw;
     border-radius: 20px;
+    border-radius: 50%;
     margin: auto;
+    box-shadow:
+    0 0 15px 10px rgba(255, 255, 255, 0.582),  /* inner white */
+    0 0 20px 15px rgba(255, 0, 255, 0.425), /* middle magenta */
+    0 0 30px 20px rgba(0, 255, 255, 0.486); /* outer cyan */
 }
 
 .display__individualText {

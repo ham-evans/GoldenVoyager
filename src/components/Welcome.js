@@ -1,9 +1,6 @@
 import React from 'react';
 import "./Welcome.css";
 import planet from '../gvimages/Tygrisol.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { Link } from "react-router-dom";
 
 export default function Welcome () {
     return (

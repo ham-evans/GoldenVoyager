@@ -19,6 +19,7 @@
     align-items: center;
     cursor: pointer;
     text-decoration: none;
+    border-radius: 60px;
   }
   
   .nav-container {

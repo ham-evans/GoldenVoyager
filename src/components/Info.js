@@ -1,10 +1,9 @@
 import React from 'react';
 import "./Info.css";
-import pattern from '../images/star2.jpeg';
 
 export default function Info () {
     return (
-        <div className="info" id="info" style={{ backgroundImage: `url(${pattern})` }}>
+        <div className="info" id="info">
             <div className="info__container"  >
                 <h1>Bit Bot Society Information</h1> 
                 <ul>

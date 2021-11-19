@@ -34,7 +34,7 @@ export default function Team () {
                             </a>
                         </div>
                         <div className="team__individual">
-                            <a href="https://twitter.com/tyinlife" target="_blank" rel="noreferrer">
+                            <a href="https://twitter.com/" target="_blank" rel="noreferrer">
                                 <div className="team__imgWrapper">
                                     <img src={adapt} alt="adapt" />
                                 </div>
@@ -106,7 +106,7 @@ export default function Team () {
                             </a>
                         </div>
                         <div className="team__individual">
-                            <a href="" target="_blank" rel="noreferrer">
+                            <a href="https://twitter.com/" target="_blank" rel="noreferrer">
                                 <div className="team__imgWrapper">
                                     <img src={viole} alt="viole" />
                                 </div>
@@ -117,7 +117,7 @@ export default function Team () {
                             </a>
                         </div>
                         <div className="team__individual">
-                            <a href="" target="_blank" rel="noreferrer">
+                            <a href="https://twitter.com/" target="_blank" rel="noreferrer">
                                 <div className="team__imgWrapper">
                                     <img src={bobbums} alt="bobbums" />
                                 </div>
@@ -135,7 +135,7 @@ export default function Team () {
                     <div className="team__coreWrapper">
                         <div className="team__individual">
                             <a href="https://twitter.com/Boomer_gm" target="_blank" rel="noreferrer">
-                                <div className="team__imgWrapper">
+                                <div className="team__imgWrapperRound">
                                     <img src={boomer} alt="boomer" />
                                 </div>
                                 <div className="text__wrapper">
@@ -146,7 +146,7 @@ export default function Team () {
                         </div>
                         <div className="team__individual">
                             <a href="https://twitter.com/Metaciple" target="_blank" rel="noreferrer">
-                                <div className="team__imgWrapper">
+                                <div className="team__imgWrapperRound">
                                     <img src={master} alt="master" />
                                 </div>
                                 <div className="text__wrapper">
@@ -157,7 +157,7 @@ export default function Team () {
                         </div>
                         <div className="team__individual">
                             <a href="https://twitter.com/_OrderOfShadows" target="_blank" rel="noreferrer">
-                                <div className="team__imgWrapper">
+                                <div className="team__imgWrapperRound">
                                     <img src={order} alt="order" />
                                 </div>
                                 <div className="text__wrapper">
@@ -167,7 +167,7 @@ export default function Team () {
                         </div>
                         <div className="team__individual">
                             <a href="https://twitter.com/goldenxnft" target="_blank" rel="noreferrer">
-                                <div className="team__imgWrapper">
+                                <div className="team__imgWrapperRound">
                                     <img src={golden} alt="golden" />
                                 </div>
                                 <div className="text__wrapper">
@@ -178,7 +178,7 @@ export default function Team () {
                         </div>
                         <div className="team__individual">
                             <a href="https://twitter.com/1hammm" target="_blank" rel="noreferrer">
-                                <div className="team__imgWrapper">
+                                <div className="team__imgWrapperRound">
                                     <img src={ham} alt="ham" />
                                 </div>
                                 <div className="text__wrapper">
