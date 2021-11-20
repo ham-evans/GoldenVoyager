@@ -67,10 +67,10 @@
     margin-left: 20px;
 }
 
-/*.home__wrapper button:hover {
+.home__wrapper button:hover {
     transform: scale(1.1);
     cursor: pointer; 
-}*/
+}
 
 @media screen and (max-width: 675px) {
     .home__wrapper h1 { 
