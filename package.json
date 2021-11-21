@@ -30,7 +30,7 @@
     "web3-react": "^5.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --history-api-fallback",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

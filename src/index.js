@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from '@web3-react/core'
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App';
@@ -16,13 +16,13 @@ function getLibrary(provider){
 
 
 ReactDOM.render(
-  <HashRouter>
+  <BrowserRouter>
     <React.StrictMode>
       <Web3ReactProvider getLibrary={getLibrary}>
         <App />
       </Web3ReactProvider>
     </React.StrictMode>
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
