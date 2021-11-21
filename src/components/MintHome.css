@@ -220,9 +220,9 @@
 
     .minthome__container {
         right: 5vw;
-        top: 14vh;
+        top: 0;
         width: 90vw;
-        height: 75vh;
+        height: 100%;
         overflow: visible;
     }
     
