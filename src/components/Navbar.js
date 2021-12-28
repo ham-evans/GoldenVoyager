@@ -54,6 +54,15 @@ export default class Navbar extends Component {
               </HashLink>
             </li>
             <li className="nav-item">
+              <Link
+                smooth="true"
+                to="/station"
+                className="nav-links"
+              >
+                STATION
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-links" to={{ pathname: "https://twitter.com/GVoyagerParty" }} target="_blank" >
                 <FontAwesomeIcon icon={faTwitter} />
               </Link>

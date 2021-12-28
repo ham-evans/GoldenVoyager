@@ -233,14 +233,14 @@ class EthereumSession{
       return false;
   }
 
-  async isConnected(){
+  isConnected(){
     if( !window.ethereum.isConnected() )
       return false;
 
     if( !this.isChainConnected() )
       return false;
 
-    if( !(await this.hasAccounts()) )
+    if( !this.hasAccounts() )
       return false;
     
     return true;
