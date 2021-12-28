@@ -1,7 +1,9 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import EthereumSession from '../lib/eth-session.js';
 import ContractAbi from '../artifacts/contracts/GoldenVoyager.json';
+
+import StationModal from '../components/StationModal.js';
 
 const mainnetConfig = {
     'CONTRACT': '0x05cef8e8eeFca214F7eD28564C980E6d45A2Bf1d',
@@ -26,12 +28,13 @@ const tokenCard = {
     color: 'white',
     float: 'left',
     margin: '1em',
-    height: '380px',
+    height: '500px',
     textAlign: 'left',
     width: '250px'
 }
 
 export default function Station(){
+    const [ showModal, setModal ] = React.useState( null );
     const [ tokenData, setTokenData ] = React.useState([]);
     const [ wallet, setWallet ] = React.useState( null );
 
@@ -53,6 +56,13 @@ export default function Station(){
         if( session.isConnected() ){
             loadWallet( session );
         }
+    };
+
+    const handlePersonalize = async (evt, token) => {
+        if( evt && evt.cancelable )
+            evt.preventDefault();
+
+        setModal( token );
     };
 
     const fetchPersonalizations = async ( wallet ) => {
@@ -129,18 +139,41 @@ export default function Station(){
 
         const URLs = await fetchURLs( wallet );
         const responses = await fetchTokenData( URLs );
-        const presonalizations = await fetchPersonalizations( wallet );
+
+        const pMap = {};
+        const personalizations = await fetchPersonalizations( wallet );
+        for( let p of personalizations ){
+            pMap[ p.tokenId ] = p.data
+        }
+
         const tokenData = await Promise.all(
             responses.filter( data => data.response.ok )
                 .map( async (data) => ({
                     tokenId: data.tokenId,
-                    json: await data.response.json()
+                    json: await data.response.json(),
+                    personalization: pMap[ data.tokenId ] || {}
                 })
             ));
 
         setWallet(wallet);
         setTokenData( tokenData );
-    }
+    };
+
+    const refreshToken = async ( token ) => {
+        for( let i = 0; i < 3; ++i ){
+            try{
+                const data = await session.contract.personalized( token.tokenId )
+                for(let td of tokenData){
+                    if( td.tokenId === token.tokenId ){
+                        td.personalization = data;
+                        setTokenData( tokenData );
+                        return;
+                    }
+                }
+            }
+            catch( err ){}
+        }
+    };
 
     const renderGallery = () => {
         return tokenData.map(( token ) => {
@@ -155,14 +188,25 @@ export default function Station(){
             });
 
             return (
-                <fieldset style={tokenCard}>
+                <fieldset key={token.tokenId} style={tokenCard}>
                     <legend>{token.json.name}</legend>
-                    <img key={token.tokenId} src={token.json.image} height="200" width="200" style={{ display: 'block', margin: '1em auto' }} />
-                    {token.json.attributes.map( attr => (
-                        <div>
-                            <label style={{ fontWeight: 'bold' }}>{attr.trait_type}</label>: {attr.value}
-                        </div>
-                    ))}
+                    <img alt={token.json.name} src={token.json.image} height="200" width="200" style={{ display: 'block', margin: '1em auto' }} />
+                    <div>
+                        <u style={{ textDecoration: 'underline' }}>Personalization</u><br />
+                        <label>Name</label>: {token.personalization.name}<br />
+                        <label>Description</label>: {token.personalization.description}<br />
+                        <label>Story</label>: {token.personalization.story}<br />
+                        <button style={{ float: 'right' }} onClick={evt => handlePersonalize( evt, token )}>Edit</button>
+                    </div>
+                    <hr style={{ clear: 'both' }} />
+                    <div>
+                        <u style={{ textDecoration: 'underline' }}>Attributes</u><br />
+                        {token.json.attributes.map( attr => (
+                            <div key={attr.trait_type}>
+                                <label style={{ fontWeight: 'bold' }}>{attr.trait_type}</label>: {attr.value}
+                            </div>
+                        ))}
+                    </div>
                 </fieldset>
             );
         })
@@ -195,10 +239,15 @@ export default function Station(){
         );
     }
 
-    console.info( "refresh" );
+    let modal = null;
+    if( showModal ){
+        modal = <StationModal token={showModal} refreshToken={refreshToken} setModal={setModal} />
+    }
+
     return (
         <div style={{ color: 'white', textAlign: 'center' }}>
             <h1>The Station</h1>
+            <div style={{ position: 'absolute', width: '100%' }}>{modal}</div>
             {content}
         </div>
     );
