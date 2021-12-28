@@ -55,7 +55,29 @@ export default function Station(){
         }
     };
 
-    const getTokenData = async ( URLs ) => {
+    const fetchPersonalizations = async ( wallet ) => {
+        return await Promise.all( wallet.map( tokenId => {
+            return new Promise(async ( resolve, reject ) => {
+                let lastErr = null;
+                for( let i = 0; i < 3; ++i ){
+                    try{
+                        const data = await session.contract.personalized( tokenId )
+                        resolve({
+                            tokenId,
+                            data
+                        });
+                        return;
+                    }
+                    catch( err ){
+                        lastErr = err;
+                    }
+                }
+                reject( lastErr );
+            })
+        })) || [];
+    };
+
+    const fetchTokenData = async ( URLs ) => {
         return await Promise.all( URLs.map( urlData => {
             return new Promise(async ( resolve, reject ) => {
                 let lastErr = null;
@@ -77,7 +99,7 @@ export default function Station(){
         })) || [];
     };
 
-    const getURLs = async ( wallet ) => {
+    const fetchURLs = async ( wallet ) => {
         return await Promise.all( wallet.map( tokenId => {
             return new Promise(async ( resolve, reject ) => {
                 let lastErr = null;
@@ -98,6 +120,27 @@ export default function Station(){
             })
         })) || [];
     };
+
+    const loadWallet = async ( session ) => {
+        const account = '0x4da11ecf1bfe8aba3fedc5faa6e0c81ab8aa23e4';//session.wallet.accounts[0];
+        let wallet = await session.contract.walletOfOwner( account );
+        wallet = wallet.map( tokenId => parseInt( tokenId.toString() ) );
+        
+
+        const URLs = await fetchURLs( wallet );
+        const responses = await fetchTokenData( URLs );
+        const presonalizations = await fetchPersonalizations( wallet );
+        const tokenData = await Promise.all(
+            responses.filter( data => data.response.ok )
+                .map( async (data) => ({
+                    tokenId: data.tokenId,
+                    json: await data.response.json()
+                })
+            ));
+
+        setWallet(wallet);
+        setTokenData( tokenData );
+    }
 
     const renderGallery = () => {
         return tokenData.map(( token ) => {
@@ -124,25 +167,6 @@ export default function Station(){
             );
         })
     };
-
-    const loadWallet = async ( session ) => {
-        const account = '0x4da11ecf1bfe8aba3fedc5faa6e0c81ab8aa23e4';//session.wallet.accounts[0];
-        let wallet = await session.contract.walletOfOwner( account );
-        wallet = wallet.map( tokenId => parseInt( tokenId.toString() ) );
-        setWallet(wallet);
-
-        const URLs = await getURLs( wallet );
-        const responses = await getTokenData( URLs );
-        const tokenData = await Promise.all(
-            responses.filter( data => data.response.ok )
-                .map( async (data) => ({
-                    tokenId: data.tokenId,
-                    json: await data.response.json()
-                })
-            ));
-
-        setTokenData( tokenData );
-    }
 
 
     let content = (
