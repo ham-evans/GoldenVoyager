@@ -2,6 +2,7 @@ import Wallet from './wallet.js';
 
 class EthereumSession{
   chain           = null;
+  contract        = null;
   contractAddress = null;
   contractABI     = null;
   isWeb3Connected = false;
@@ -17,12 +18,6 @@ class EthereumSession{
     this.contractAddress = args.contractAddress;
     this.contractABI = args.contractABI;
     this.wallet = new Wallet();
-    
-    if( args.provider ){
-      this.provider = args.provider;
-    }
-
-    this.debug( "EthereumSession.constructor()" );
   }
 
   async addChain( chain ){
@@ -37,25 +32,31 @@ class EthereumSession{
     }
   }
 
-  async connectEthers( deep ){
-    let ethers;
-    try{
-      ethers = require( 'ethers' );
-    }
-    catch( err ){
-      return false;
-    }
-
-    let subscribe = false;
-    if( window.ethereum && !this.ethersProvider ){
-      subscribe = true;
-      this.ethersProvider = new ethers.providers.Web3Provider( window.ethereum, 'any' );
-      this.debug( 'using browser' );
+  async connectEthers( deep, provider ){
+    if( !window.ethers ){
+      try{
+        window.ethers = require( 'ethers' );
+      }
+      catch( err ){
+        this.error( "'ethers' is undefined and cannot be imported" );
+        return false;
+      }
     }
 
-    if( !this.ethersProvider && this.provider ){
-      subscribe = true;
-      this.ethersProvider = new ethers.providers.Web3Provider( this.provider, 'any' );
+    if( !provider ){
+      provider = window.ethereum;
+    }
+
+    //let subscribe = false;
+    if( !this.ethersProvider || provider != this.provider ){
+      if( provider == window.ethereum )
+        this.debug( 'using browser' );
+      else
+        this.debug( 'using NETWORK override' );
+
+      //subscribe = true;
+      this.provider = provider;
+      this.ethersProvider = new window.ethers.providers.Web3Provider( provider, 'any' );
       this.debug( 'using NETWORK override' );
     }
 
@@ -66,16 +67,20 @@ class EthereumSession{
 
     if( !this.contract ){
       //const signer = this.ethersProvider.getSigner();
-      this.contract = new ethers.Contract( this.contractAddress, this.contractABI, this.ethersProvider );
+      this.contract = new window.ethers.Contract( this.contractAddress, this.contractABI, this.ethersProvider );
     }
 
-    if( window.ethereum.isConnected() ){
-      //if( subscribe )
-      //  this.subscribe();
+    try{
+      if( !window.ethereum.isConnected() )
+        return false;
     }
-    else{
-      return false;
+    catch( err ){
+      this.debug({ err })
     }
+
+
+    //if( subscribe )
+    //  this.subscribe();
 
 
     if( !(await this.connectChain( deep )) )
@@ -87,26 +92,33 @@ class EthereumSession{
     return true;
   }
 
-  async connectWeb3( deep ){
-    let Web3 = null;
-    try{
-      Web3 = require( 'web3' );
-    }
-    catch( err ){
-      debugger
+  async connectWeb3( deep, provider ){
+    //TODO: this.getWeb3Type();
+
+    if( !window.Web3 ){
+      try{
+        window.Web3 = require( 'web3' );
+      }
+      catch( err ){
+        this.error( "'Web3' is undefined and cannot be imported" );
+        return false;
+      }
     }
 
-    let subscribe = false;
-    if( window.ethereum && !this.web3client ){
-      subscribe = true;
-      this.web3client = new Web3( window.ethereum );
-      this.debug( 'using browser' );
+    if( !provider ){
+      provider = window.ethereum;
     }
 
-    if( !this.web3client && this.provider ){
-      subscribe = true;
-      this.web3client = new Web3( this.provider );
-      this.debug( 'using NETWORK override' );
+    //let subscribe = false;
+    if( !this.web3client || provider != this.provider ){
+      if( provider == window.ethereum )
+        this.debug( 'using browser' );
+      else
+        this.debug( 'using NETWORK override' );
+
+      //subscribe = true;
+      this.provider = provider;
+      this.web3client = new window.Web3( provider );
     }
 
     if( !this.web3client ){
@@ -118,13 +130,18 @@ class EthereumSession{
     if( !this.contract )
       this.contract = new this.web3client.eth.Contract( this.contractABI, this.contractAddress );
 
-    if( window.ethereum.isConnected() ){
-      if( subscribe )
-        this.subscribe();
+
+    try{
+      if( !window.ethereum.isConnected() )
+        return false;
     }
-    else{
-      return false;
+    catch( err ){
+      this.debug({ err })
     }
+
+
+    //if( subscribe )
+    //  this.subscribe();
 
 
     if( !(await this.connectChain( deep )) )
@@ -139,6 +156,12 @@ class EthereumSession{
   async connectAccounts( deep ){
     if( this.hasAccounts() )
       return true;
+
+    if( deep ){
+      this.wallet.accounts = await this.getWalletAccounts();
+      if( this.hasAccounts() )
+        return true;
+    }
 
     this.wallet.accounts = await this.getWalletAccounts();
     if( this.hasAccounts() )
@@ -155,6 +178,13 @@ class EthereumSession{
   async connectChain( deep ){
     if( this.isChainConnected() )
       return true;
+
+    if( deep ){
+      const chainID = await this.getWalletChainID();
+      this.wallet.chain = EthereumSession.getChain( chainID );
+      if( this.isChainConnected() )
+        return true;
+    }
 
     const chainID = await this.getWalletChainID();
     this.wallet.chain = EthereumSession.getChain( chainID );
@@ -198,6 +228,61 @@ class EthereumSession{
     return null;
   }
 
+  static getError( err ){
+    if( err && err.code === 4001 ){
+      err.stack = null;
+      return err;
+    }
+    
+    let text = JSON.stringify( err );
+    if( text && text !== '{}' )
+      return err;
+
+
+    let newError = null;
+    const message = err.message ? err.message : String( err );
+    const start = message.indexOf( '{' );
+    if( start > -1 ){
+      newError = new Error( message.substr( 0, start ).replace( /\s+$/, '' ) );
+      if( err.stack ){
+        newError.stack = err.stack;
+      }
+
+      const end = message.lastIndexOf( '}' );
+      if( end > -1 ){
+        const json = message.substr( start, end - start + 1 );
+
+        try{
+          const unwrapped = JSON.parse( json );
+          if( unwrapped.originalError ){
+            if( unwrapped.originalError.message === newError.message ){
+              newError = unwrapped.originalError;
+            }
+            else{
+              newError.originalError = unwrapped.originalError;
+            }
+          }
+          else{
+            if( unwrapped.message === newError.message ){
+              newError = unwrapped;
+            }
+            else{
+              newError.originalError = unwrapped;
+            }
+          }
+
+          return newError;
+        }
+        catch( innerError ){
+          console.warning( innerError );
+          debugger;
+        }
+      }
+    }
+
+    return err;
+  }
+
   async getWalletAccounts(){
     const isAllowed = await this.isWalletAllowed();
     if( isAllowed !== false ){
@@ -234,8 +319,13 @@ class EthereumSession{
   }
 
   isConnected(){
-    if( !window.ethereum.isConnected() )
-      return false;
+    try{
+      if( !window.ethereum.isConnected() )
+        return false;
+    }
+    catch( err ){
+      this.debug({ err })
+    }
 
     if( !this.isChainConnected() )
       return false;
@@ -308,6 +398,7 @@ class EthereumSession{
         this.isWeb3Connected = true;
         this.info({ 'isWeb3Connected': this.isWeb3Connected });
       });
+
       window.ethereum.on('disconnect', () => {
         this.isWeb3Connected = false;
         this.info({ 'isWeb3Connected': this.isWeb3Connected });
@@ -322,7 +413,7 @@ class EthereumSession{
         const chain = EthereumSession.getChain( chainID );
         if( !chain )
           this.warn( `Unknown chain ${chainID}` );
-        
+
         this.wallet.chain = chain;
       });
 
@@ -388,12 +479,14 @@ EthereumSession.COMMON_CHAINS = {
   1: {
     name:    'Ethereum Mainnet',
     decimal:    1,
-    hex:     '0x1'
+    hex:     '0x1',
+    explorer: 'https://etherscan.io'
   },
   '0x1': {
     name:    'Ethereum Mainnet',
     decimal:    1,
-    hex:     '0x1'
+    hex:     '0x1',
+    explorer: 'https://etherscan.io'
   },
   3: {
     name:    'Ropsten Testnet',
@@ -411,13 +504,15 @@ EthereumSession.COMMON_CHAINS = {
     name:    'Rinkeby Testnet',
     decimal:    4,
     hex:     '0x4',
-    rpcURL:  'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    rpcURL:  'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+    explorer: 'https://rinkeby.etherscan.io'
   },
   '0x4': {
     name:    'Rinkeby Testnet',
     decimal:    4,
     hex:     '0x4',
-    rpcURL:  'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    rpcURL:  'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+    explorer: 'https://rinkeby.etherscan.io'
   },
   5: {
     name:    'Goerli Testnet',
@@ -468,26 +563,29 @@ EthereumSession.COMMON_CHAINS = {
     rpcURL:  'https://data-seed-prebsc-1-s1.binance.org:8545/'
   },
   137: {
-    name:    'Matic',
+    name:    'Polygon (Matic)',
     decimal:    137,
     hex:     '0x89',
-    rpcURL:  'https://rpc-mainnet.maticvigil.com/'
+    rpcURL:  'https://polygonscan.com/'
   },
   '0x89': {
-    name:    'Matic',
+    name:    'Polygon (Matic)',
     decimal:    137,
     hex:     '0x89',
-    rpcURL:  'https://rpc-mainnet.maticvigil.com/'
-  }
+    rpcURL:  'https://polygonscan.com/'
+  },
+  80001: {
+    name:    'Polygon Mumbai Testnet',
+    decimal:     80001,
+    hex:     '0x13881',
+    rpcURL:  'https://matic-mumbai.chainstacklabs.com/'
+  },
+  '0x13881': {
+    name:    'Polygon Mumbai Testnet',
+    decimal:     80001,
+    hex:     '0x13881',
+    rpcURL:  'https://matic-mumbai.chainstacklabs.com/'
+  },
 };
-  
-EthereumSession.IOS_PLATFORMS = [
-  'iPad Simulator',
-  'iPhone Simulator',
-  'iPod Simulator',
-  'iPad',
-  'iPhone',
-  'iPod'
-];
 
 export default EthereumSession;

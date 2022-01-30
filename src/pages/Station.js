@@ -11,7 +11,13 @@ const mainnetConfig = {
     'ABI':       ContractAbi
 }
 
-const config = mainnetConfig;
+const rinkebyConfig = {
+    'CONTRACT': '0x95C7A06Ec67659Ac6Ecc094AB19181AD5E76068B',
+    'CHAIN_ID': 4,
+    'ABI':      ContractAbi
+};
+
+const config = rinkebyConfig;
 
 const connectButton = {
     background: 'transparent',
@@ -132,7 +138,7 @@ export default function Station(){
     };
 
     const loadWallet = async ( session ) => {
-        const account = '0x4da11ecf1bfe8aba3fedc5faa6e0c81ab8aa23e4';//session.wallet.accounts[0];
+        const account = session.wallet.accounts[0];
         let wallet = await session.contract.walletOfOwner( account );
         wallet = wallet.map( tokenId => parseInt( tokenId.toString() ) );
         
