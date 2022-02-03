@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faTwitter, faMedium } from '@fortawesome/free-brands-svg-icons'
 import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 import logo from '../gvimages/logoGif.gif'
 
@@ -38,14 +38,19 @@ export default class NavbarMint extends Component {
               </HashLink>
             </li>
             <li className="navMint-item">
-              <Link className="navMint-links" to={{ pathname: "https://twitter.com/GVoyagerParty" }} target="_blank" >
+              <a className="navMint-links" href="https://twitter.com/GVoyagerParty" target="_blank" rel="noopener noreferrer" >
                 <FontAwesomeIcon icon={faTwitter} />
-              </Link>
+              </a>
             </li>
             <li className="navMint-item">
-              <Link className="navMint-links" to={{ pathname: "https://discord.com/invite/goldenvoyagerparty" }} target="_blank" >
+              <a className="navMint-links" href="https://discord.gg/aNxxVrreNq" target="_blank" rel="noopener noreferrer" >
                 <FontAwesomeIcon icon={faDiscord} />
-              </Link>
+              </a>
+            </li>
+            <li className="navMint-item">
+              <a className="navMint-links" href="https://medium.com/@GoldenVoyagerPartyV2" target="_blank" rel="noopener noreferrer" >
+                <FontAwesomeIcon icon={faMedium} />
+              </a>
             </li>
           </ul>
           <div className="navMint-icon" onClick={this.handleToggle}>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'; 
 import { HashLink } from "react-router-hash-link";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faTwitter, faMedium } from '@fortawesome/free-brands-svg-icons'
 import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 import logo from '../gvimages/logoGif.gif'
 
@@ -54,23 +53,19 @@ export default class Navbar extends Component {
               </HashLink>
             </li>
             <li className="nav-item">
-              <Link
-                smooth="true"
-                to="/station"
-                className="nav-links"
-              >
-                STATION
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://twitter.com/GVoyagerParty" }} target="_blank" >
+              <a className="nav-links" href="https://twitter.com/GVoyagerParty" target="_blank" rel="noopener noreferrer" >
                 <FontAwesomeIcon icon={faTwitter} />
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link className="nav-links" to={{ pathname: "https://discord.com/invite/goldenvoyagerparty" }} target="_blank" >
+              <a className="nav-links" href="https://discord.gg/aNxxVrreNq" target="_blank" rel="noopener noreferrer" >
                 <FontAwesomeIcon icon={faDiscord} />
-              </Link>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-links" href="https://medium.com/@GoldenVoyagerPartyV2" target="_blank" rel="noopener noreferrer" >
+                <FontAwesomeIcon icon={faMedium} />
+              </a>
             </li>
           </ul>
           <div className="nav-icon" onClick={this.handleToggle}>
