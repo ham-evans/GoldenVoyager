@@ -1,0 +1,21 @@
+.cards {
+        margin-top: 5vh;
+        top: 60px;
+        width: 100%;
+        display: flex;
+        color: white;
+        flex-wrap: wrap;
+  }
+
+.flex-container {
+        
+      margin: 5vh;
+      justify-content: center;
+      align-content: center;
+      display: flex;
+      color: white;
+      flex-wrap: wrap;
+      flex-direction: row;
+    
+
+}
